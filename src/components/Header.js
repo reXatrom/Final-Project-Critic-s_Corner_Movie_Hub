@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
-// import logo from '../assets/logo.png'
+import { useEffect, useState } from 'react'
+import logo from '../assets/logo.PNG'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-// import userIcon from '../assets/user-icon.png'
+import userIcon from '../assets/user-icon.png'
 import { IoSearchOutline } from 'react-icons/io5';
 import { navigation } from '../contacts/navigation';
 
@@ -14,15 +14,14 @@ const Header = () => {
 
     useEffect(() => {
         if (searchInput) {
-            navigate(`/search?query=${searchInput}`)
+            navigate(`/search?q=${searchInput}`)
         }
-    }, [searchInput])
+    }, [searchInput, navigate])
 
     const handleSubmit = (e) => {
         e.preventDefault();
         }
-        
-    // const logo = 'https://raw.githubusercontent.com/AbdullahAlFaruk/moviehub/main/src/assets/logo.png';
+    
 
   return (
     <header className ='fixed top-0 w-full h-16 bg-black bg-opacity-50 z-40'>
@@ -58,7 +57,7 @@ const Header = () => {
                         type = "text"
                         placeholder = "Search movies, tv shows, people..."
                         className = "bg-transparent px-4 py-1 outline-none hidden lg:block"
-                        onChange = {(e) => setSearchInput(e. target.value)}
+                        onChange = {(e) => setSearchInput(e.target.value)}
                         value = {searchInput}
                     />
 
