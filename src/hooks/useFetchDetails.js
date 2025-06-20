@@ -1,27 +1,28 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const useFetchDetails = (endpoint)=>{
-    const [data,setData] = useState()
-    const [loading,setLoading] = useState(false)
+const API_KEY = process.env.REACT_APP_OMDB_API_KEY;
 
-    // Removed unused fetchData function
+const useFetchDetails = (queryParams) => {
+  
+  const [data, setData] = useState();
+  const [loading, setLoading] = useState(false);
 
-    useEffect(()=>{
-        const fetchData = async()=>{
-            try {
-                setLoading(true)
-                const response = await axios.get(endpoint)
-                setLoading(false)
-                setData(response.data)
-            } catch (error) {
-                console.log('error',error)
-            }
-        }
-        fetchData()
-    },[endpoint])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`/?${queryParams}&apikey=${API_KEY}`);
+        setLoading(false);
+        setData(response.data);
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    if (queryParams) fetchData();
+  }, [queryParams]);
 
-    return { data , loading}
-}
+  return { data, loading };
+};
 
-export default useFetchDetails
+export default useFetchDetails;

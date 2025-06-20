@@ -1,24 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    bannerData : [],
-    imageURL : ""
+    bannerData: []  // OMDb movie data array
+    // removed imageURL since OMDb returns full image URLs
 }
 
 export const MovieSlice = createSlice({
-    name : 'Movie',
+    name: 'MovieData',
     initialState,
-    reducers : {
-        setBannerData : (state,action)=>{
-            state.bannerData = action.payload
-        },
-        setImageURL : (state,action) =>{
-            state.imageURL = action.payload
+    reducers: {
+        setBannerData: (state, action) => {
+            state.bannerData = action.payload;
         }
+        // removed setImageURL reducer since no longer needed
     }
 })
 
-export const { setBannerData, setImageURL } = MovieSlice.actions
+export const { setBannerData } = MovieSlice.actions;
 
-
-export default MovieSlice.reducer
+export default MovieSlice.reducer;

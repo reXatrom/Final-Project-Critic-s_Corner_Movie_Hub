@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from 'react'
-import HomeBanner from '../components/HomeBanner'
-import { useSelector } from 'react-redux'
-import Cards from '../components/Cards'
-import HorizontalScrollCard from '../components/HorizontalScrollCard'
-import axios from 'axios'
-import useFetch from '../hooks/useFetch'
+import React from 'react';
+import HomeBanner from '../components/HomeBanner';
+import HorizontalScrollCard from '../components/HorizontalScrollCard';
+import useFetch from '../hooks/useFetch';
 
 const Home = () => {
-  const trendingData = useSelector(state => state.movieoData.bannerData)
-  const { data : nowPlayingData } = useFetch('/movie/now_playing')
-  const { data : topRatedData } = useFetch('/movie/top_rated')
-  const { data : popularTvShowData } = useFetch('/tv/popular')
-  const { data : onTheAirShowData } = useFetch('/tv/on_the_air')
-  
+  const { data: trendingData } = useFetch(`?s=avengers&type=movie`);
+  const { data: nowPlayingData } = useFetch(`?s=avengers&type=movie&y=2023`); // example for recent movies
+  const { data: topRatedData } = useFetch(`?s=godfather&type=movie`);
+  const { data: popularTvShowData } = useFetch(`?s=friends&type=series`);
+  const { data: onTheAirShowData } = useFetch(`?s=breaking bad&type=series`);
+
   return (
     <div>
-        <HomeBanner/>
-        <HorizontalScrollCard data={trendingData} heading={"Trending"} trending={true}/>
-        <HorizontalScrollCard data={nowPlayingData} heading={"Now Playing"} media_type={"movie"}/>
-        <HorizontalScrollCard data={topRatedData} heading={"Top Rated Movies"} media_type={"movie"}/>
-        <HorizontalScrollCard data={popularTvShowData} heading={"Popular TV Show"} media_type={"tv"}/>
-        <HorizontalScrollCard data={onTheAirShowData} heading={"On The Air"} media_type={"tv"}/>
+      <HomeBanner data={trendingData} />
+      <HorizontalScrollCard data={trendingData} heading={"Trending"} />
+      <HorizontalScrollCard data={nowPlayingData} heading={"Now Playing"} />
+      <HorizontalScrollCard data={topRatedData} heading={"Top Rated Movies"} />
+      <HorizontalScrollCard data={popularTvShowData} heading={"Popular TV Shows"} />
+      <HorizontalScrollCard data={onTheAirShowData} heading={"On The Air"} />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

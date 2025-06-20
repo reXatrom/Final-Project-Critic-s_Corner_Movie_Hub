@@ -4,25 +4,32 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { RouterProvider } from 'react-router-dom';
 import router from './routes';
-import axios from 'axios';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
+import axios from 'axios';
 
-/**setup axios */
-axios.defaults.baseURL = "https://api.themoviedb.org/3"
-axios.defaults.headers.common['Authorization'] = `Bearer ${process.env.REACT_APP_ACCESS_TOKEN}`
+/** Setup axios instance for OMDb API */
+export const omdbAxios = axios.create({
+  baseURL: 'http://www.omdbapi.com/',
+});
+
+// Add your OMDb API key to every request automatically
+omdbAxios.interceptors.request.use(config => {
+  if (!config.params) {
+    config.params = {};
+  }
+  config.params.apikey = '6014290c'; // Replace with your actual API key if different
+  return config;
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
     <Provider store={store}>
-          <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </Provider>
-  
   // </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()
+// Measure performance (optional)
+reportWebVitals();

@@ -3,7 +3,7 @@ import logo from '../assets/logo.PNG'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import userIcon from '../assets/user-icon.png'
 import { IoSearchOutline } from 'react-icons/io5';
-import { navigation } from '../contacts/navigation';
+import { navigation } from '../constants/navigation';
 
 const Header = () => {
 

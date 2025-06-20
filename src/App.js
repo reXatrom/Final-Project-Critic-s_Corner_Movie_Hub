@@ -6,36 +6,33 @@ import MobileNav from './components/MobileNav';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setBannerData,setImageURL } from './store/MovieSlice';
+import { setBannerData } from './store/MovieSlice';
 
 function App() {
-  const dispatch = useDispatch()
-
-  // Removed unused fetchTrendingData and fetchConfiguration functions
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchTrendingData = async () => {
       try {
-        const response = await axios.get('/trending/all/week')
-        dispatch(setBannerData(response.data.results))
+        // OMDb does not have a "trending" endpoint.
+        // You can do a search query instead; example: "batman"
+        const response = await axios.get(`/?apikey=${process.env.REACT_APP_OMDB_API_KEY}&s=batman&type=movie`);
+        
+        // OMDb returns data.Search array with movie results
+        if (response.data && response.data.Search) {
+          dispatch(setBannerData(response.data.Search));
+        } else {
+          dispatch(setBannerData([]));
+        }
       } catch (error) {
-        console.log("error", error)
+        console.log("error", error);
+        dispatch(setBannerData([]));
       }
-    }
+    };
 
-    const fetchConfiguration = async () => {
-      try {
-        const response = await axios.get("/configuration")
-        dispatch(setImageURL(response.data.images.secure_base_url + "original"))
-      } catch (error) {
-        // handle error if needed
-      }
-    }
+    fetchTrendingData();
+  }, [dispatch]);
 
-    fetchTrendingData()
-    fetchConfiguration()
-  }, [dispatch])
-  
   return (
     <main className='pb-14 lg:pb-0'>
         <Header/>
@@ -48,4 +45,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
